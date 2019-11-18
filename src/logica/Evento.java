@@ -100,7 +100,4 @@ public class Evento {
 		this.infoAdiconal = infoAdiconal;
 	}
 	
-	
-	
-
 }

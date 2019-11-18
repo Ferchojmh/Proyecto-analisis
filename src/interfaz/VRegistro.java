@@ -173,7 +173,7 @@ public class VRegistro extends JFrame {
 
 		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setModel(new DefaultComboBoxModel<String>(
-				new String[] { "Seleccionar", "Masculino", "Femenino", "No Binario" }));
+				new String[] { "Seleccionar", "Masculino", "Femenino", "No binario" }));
 		comboBox.setBounds(288, 114, 140, 28);
 		contentPane.add(comboBox);
 	}

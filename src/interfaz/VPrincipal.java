@@ -1,6 +1,5 @@
 package interfaz;
 
-import java.awt.EventQueue;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
@@ -22,8 +21,11 @@ import javax.swing.JTextField;
 import com.toedter.calendar.JDateChooser;
 import javax.swing.JComboBox;
 import javax.swing.JTextArea;
+import java.awt.GridLayout;
+import java.awt.Dimension;
+import javax.swing.SwingConstants;
 
-public class VPrincipal extends JFrame {
+public class VPrincipal extends JFrame implements ActionListener {
 
 	/**
 	 * 
@@ -37,21 +39,10 @@ public class VPrincipal extends JFrame {
 	private JTextField txtNombreevento;
 	private JTextField txtHoraevento;
 
-	/**
-	 * Launch the application.
-	 */
-	public static void main(String[] args) {
-		EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				try {
-					VPrincipal frame = new VPrincipal();
-					frame.setVisible(true);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
-	}
+	JButton[][] matrizEventos;
+
+	int filas = 3;
+	int columnas = 5;
 
 	/**
 	 * Create the frame.
@@ -66,6 +57,8 @@ public class VPrincipal extends JFrame {
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
+
+		matrizEventos = new JButton[filas][columnas];
 
 		JLabel imagen = new JLabel("");
 		imagen.setIcon(new ImageIcon(VPrincipal.class.getResource("/multimedia/starred_ticket_120px.png")));
@@ -91,6 +84,12 @@ public class VPrincipal extends JFrame {
 		contentPane.add(btnRegistrarse);
 
 		JButton btnIngresar = new JButton("Ingresar");
+		btnIngresar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {
+				VIngresar miIngresar = new VIngresar(obtenerme());
+				miIngresar.setVisible(true);
+			}
+		});
 		btnIngresar.setFocusable(false);
 		btnIngresar.setBackground(Color.WHITE);
 		btnIngresar.setFont(new Font("Comic Sans MS", Font.PLAIN, 15));
@@ -133,118 +132,120 @@ public class VPrincipal extends JFrame {
 		tabbedPane.setBounds(40, 140, 800, 400);
 		contentPane.add(tabbedPane);
 
-		JScrollPane Eventos = new JScrollPane();
-		Eventos.setToolTipText("");
+		JPanel eventos = new JPanel();
 		tabbedPane.addTab("Eventos", new ImageIcon(VPrincipal.class.getResource("/multimedia/event_accepted_24px.png")),
-				Eventos, null);
-		tabbedPane.setDisabledIconAt(0,
-				new ImageIcon(VPrincipal.class.getResource("/multimedia/event_accepted_tentatively_24px.png")));
+				eventos, null);
+		eventos.setLayout(new GridLayout(0, 1, 0, 0));
 
-		JPanel panel = new JPanel();
-		panel.setBackground(Color.WHITE);
+		JScrollPane scrollPane_1 = new JScrollPane();
+		scrollPane_1.setBackground(Color.WHITE);
+		eventos.add(scrollPane_1);
+
+		JPanel Organizadores = new JPanel();
+		Organizadores.setBackground(Color.WHITE);
 		tabbedPane.addTab("Organizadores", new ImageIcon(VPrincipal.class.getResource("/multimedia/manager_24px.png")),
-				panel, null);
-		panel.setLayout(null);
+				Organizadores, null);
+		Organizadores.setLayout(null);
 
 		JLabel lblCreeSuEvento = new JLabel("Cree su evento");
 		lblCreeSuEvento.setFont(new Font("SansSerif", Font.PLAIN, 30));
 		lblCreeSuEvento.setBounds(6, 6, 255, 45);
-		panel.add(lblCreeSuEvento);
+		Organizadores.add(lblCreeSuEvento);
 
 		JSeparator separator = new JSeparator();
 		separator.setBounds(6, 87, 321, 2);
-		panel.add(separator);
+		Organizadores.add(separator);
 
 		JLabel lblDatosDelResponsable = new JLabel("Datos del responsable:");
 		lblDatosDelResponsable.setBounds(6, 73, 240, 16);
-		panel.add(lblDatosDelResponsable);
+		Organizadores.add(lblDatosDelResponsable);
 
 		txtNombre = new JTextField();
 		txtNombre.setBounds(150, 101, 177, 28);
-		panel.add(txtNombre);
+		Organizadores.add(txtNombre);
 		txtNombre.setColumns(10);
 
 		txtIdentificacion = new JTextField();
 		txtIdentificacion.setBounds(150, 141, 177, 28);
-		panel.add(txtIdentificacion);
+		Organizadores.add(txtIdentificacion);
 		txtIdentificacion.setColumns(10);
 
 		JLabel lblNombre = new JLabel("Nombre:");
 		lblNombre.setBounds(16, 107, 130, 16);
-		panel.add(lblNombre);
+		Organizadores.add(lblNombre);
 
 		JLabel lblIdentificacion = new JLabel("Identificacion:");
 		lblIdentificacion.setBounds(16, 147, 130, 16);
-		panel.add(lblIdentificacion);
+		Organizadores.add(lblIdentificacion);
 
 		txtTelefono = new JTextField();
 		txtTelefono.setBounds(150, 181, 177, 28);
-		panel.add(txtTelefono);
+		Organizadores.add(txtTelefono);
 		txtTelefono.setColumns(10);
 
 		JLabel lblTelefono = new JLabel("Telefono:");
 		lblTelefono.setBounds(16, 187, 130, 16);
-		panel.add(lblTelefono);
+		Organizadores.add(lblTelefono);
 
 		JLabel lblDatosDelEvento = new JLabel("Datos del evento:");
 		lblDatosDelEvento.setBounds(401, 73, 255, 16);
-		panel.add(lblDatosDelEvento);
+		Organizadores.add(lblDatosDelEvento);
 
 		JSeparator separator_1 = new JSeparator();
 		separator_1.setBounds(401, 87, 350, 2);
-		panel.add(separator_1);
+		Organizadores.add(separator_1);
 
 		txtNombreevento = new JTextField();
 		txtNombreevento.setBounds(574, 101, 177, 28);
-		panel.add(txtNombreevento);
+		Organizadores.add(txtNombreevento);
 		txtNombreevento.setColumns(10);
 
 		JDateChooser fechaEvento = new JDateChooser();
 		fechaEvento.setBackground(Color.WHITE);
 		fechaEvento.setBounds(574, 141, 177, 28);
-		panel.add(fechaEvento);
+		Organizadores.add(fechaEvento);
 
 		txtHoraevento = new JTextField();
 		txtHoraevento.setText("hh/mm/ss");
 		txtHoraevento.setToolTipText("");
 		txtHoraevento.setBounds(574, 181, 177, 28);
-		panel.add(txtHoraevento);
+		Organizadores.add(txtHoraevento);
 		txtHoraevento.setColumns(10);
 
 		JComboBox<String> comboBox = new JComboBox<String>();
 		comboBox.setBackground(Color.WHITE);
 		comboBox.setBounds(574, 221, 177, 28);
-		panel.add(comboBox);
+		Organizadores.add(comboBox);
 
 		JButton btnBoleteria = new JButton("Boleteria");
 		btnBoleteria.setFocusable(false);
 		btnBoleteria.setBackground(Color.WHITE);
 		btnBoleteria.setBounds(574, 261, 177, 28);
-		panel.add(btnBoleteria);
+		Organizadores.add(btnBoleteria);
 
 		JLabel lblNombreDelEvento = new JLabel("Nombre del evento:");
 		lblNombreDelEvento.setBounds(411, 107, 151, 16);
-		panel.add(lblNombreDelEvento);
+		Organizadores.add(lblNombreDelEvento);
 
 		JLabel lblFechaDelEvento = new JLabel("Fecha del evento:");
 		lblFechaDelEvento.setBounds(411, 147, 151, 16);
-		panel.add(lblFechaDelEvento);
+		Organizadores.add(lblFechaDelEvento);
 
 		JLabel lblHoraDelEvento = new JLabel("Hora del evento:");
 		lblHoraDelEvento.setBounds(411, 187, 151, 16);
-		panel.add(lblHoraDelEvento);
+		Organizadores.add(lblHoraDelEvento);
 
 		JLabel lblLugarDelEvento = new JLabel("Lugar del evento:");
 		lblLugarDelEvento.setBounds(411, 227, 151, 16);
-		panel.add(lblLugarDelEvento);
+		Organizadores.add(lblLugarDelEvento);
 
 		JLabel lblPrecioDelEvento = new JLabel("Precio del evento:");
 		lblPrecioDelEvento.setBounds(411, 267, 151, 16);
-		panel.add(lblPrecioDelEvento);
+		Organizadores.add(lblPrecioDelEvento);
 
 		JLabel lblInformacionAdicional = new JLabel("Informacion adicional:");
 		lblInformacionAdicional.setBounds(411, 307, 151, 16);
-		panel.add(lblInformacionAdicional);
+		Organizadores.add(lblInformacionAdicional);
 
 		JButton btncrearElEvento = new JButton("¡Crear el evento!");
 		btncrearElEvento.addActionListener(new ActionListener() {
@@ -264,23 +265,57 @@ public class VPrincipal extends JFrame {
 		btncrearElEvento.setFocusable(false);
 		btncrearElEvento.setBackground(Color.WHITE);
 		btncrearElEvento.setBounds(50, 237, 250, 40);
-		panel.add(btncrearElEvento);
+		Organizadores.add(btncrearElEvento);
 
 		JButton btnDescartar = new JButton("descartar");
 		btnDescartar.setFocusable(false);
 		btnDescartar.setBackground(Color.WHITE);
 		btnDescartar.setBounds(50, 289, 250, 28);
-		panel.add(btnDescartar);
+		Organizadores.add(btnDescartar);
 
 		JScrollPane scrollPane = new JScrollPane();
 		scrollPane.setBounds(574, 301, 177, 55);
-		panel.add(scrollPane);
+		Organizadores.add(scrollPane);
 
 		JTextArea txtrInfoevento = new JTextArea();
 		txtrInfoevento.setText("infoEvento");
 		scrollPane.setViewportView(txtrInfoevento);
 		tabbedPane.setDisabledIconAt(1,
 				new ImageIcon(VPrincipal.class.getResource("/multimedia/client_company_24px.png")));
+
+		JPanel panel = new JPanel();
+		panel.setBackground(Color.WHITE);
+		panel.setLayout(null);
+		scrollPane_1.setViewportView(panel);
+
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < columnas; j++) {
+				JButton boton = new JButton();
+				boton.setBackground(Color.WHITE);
+				boton.setBounds((i * 240) + 50, (j * 220) + 60, 200, 200);
+				boton.setText("Nombre evento");
+				boton.setHorizontalTextPosition(SwingConstants.CENTER);
+				boton.setVerticalTextPosition(SwingConstants.BOTTOM);
+				boton.setIcon(new ImageIcon(VPrincipal.class.getResource("/multimedia/around_the_globe_100px.png")));
+				panel.add(boton);
+				panel.setPreferredSize(new Dimension(750, j * 300));
+				boton.addActionListener(this);
+				matrizEventos[i][j] = boton;
+			}
+		}
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		for (int i = 0; i < filas; i++) {
+			for (int j = 0; j < columnas; j++) {
+				if (e.getSource() == matrizEventos[i][j]) {
+					SeleccionZona miZona = new SeleccionZona(obtenerme());
+					miZona.setVisible(true);
+					ocultarse();
+				}
+			}
+		}
 	}
 
 	public VPrincipal obtenerme() {
